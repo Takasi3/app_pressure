@@ -56,6 +56,13 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
+  final TextEditingController _editingController = TextEditingController();
+  String _text = '';
+  void _setText (){
+    setState((){
+        _text = _editingController.text;
+    });
+  }
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -109,6 +116,29 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            SizedBox(height: 40,
+            width:  MediaQuery.of(context).size.width*0.8,
+            child:  TextField(
+              controller: _editingController,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(4)),
+                labelText: "Nhập văn bản", 
+              ),
+              onChanged: (value){_setText();},
+            ),
+            ),
+            SizedBox(height: 20,),
+            ElevatedButton(onPressed: _setText, child:Text('Xác nhận') 
+            ),
+            SizedBox(height: 10,),
+            Text('Bạn đã nhập :$_text',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15
+            ),
+            )
+
+
           ],
         ),
       ),
@@ -116,7 +146,10 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
+      floatingActionButtonAnimator :FloatingActionButtonAnimator.scaling,
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterFloat, 
+       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
